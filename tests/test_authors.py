@@ -1,0 +1,75 @@
+from models.authors import Author 
+import allure
+
+
+
+pytestmark = [allure.feature('Authors API')]
+
+
+@allure.story('Get authors')
+@allure.severity(allure.severity_level.NORMAL)
+@allure.title('Testing get authors')
+def test_get_author(author_api):
+    response = author_api.get_authors()
+    allure.attach(response.text, name="Response body",
+                  attachment_type=allure.attachment_type.JSON)
+    assert response.status_code == 200
+    
+@allure.story('Get author by id')
+@allure.severity(allure.severity_level.NORMAL)   
+@allure.title('Testing get_id authors')
+def test_get_author_by_id(author_api):
+    author_id = 3
+    response = author_api.get_author_by_id(author_id)
+    allure.attach(response.text, name="Response body",
+                  attachment_type=allure.attachment_type.JSON)
+    assert response.status_code == 200
+    author_info = Author(**response.json())
+    assert author_info.id == author_id 
+    
+    
+@allure.story('Delete authors')
+@allure.severity(allure.severity_level.NORMAL)  
+@allure.title('Testing delete authors')
+def test_delete_author(author_api):
+    author_id = 6
+    response = author_api.delete_author(author_id)
+    assert response.status_code == 200
+  
+@allure.story('Post authors')  
+@allure.severity(allure.severity_level.CRITICAL)
+@allure.title('Testing post authors')   
+def test_post_author(author_api):
+    data = {
+  "id": 6,
+  "idBook": 4,
+  "firstName": "Ivanov",
+  "lastName": "test"
+}
+    response = author_api.post_author(data)
+    allure.attach(response.text, name="Response body",
+              attachment_type=allure.attachment_type.JSON)
+    assert response.status_code == 200 
+    assert 'Ivanov' in response.json()['firstName']
+    assert response.json()['id'] == 6 
+    
+    
+@allure.story('Put authors')
+@allure.severity(allure.severity_level.CRITICAL)
+@allure.title('Testing put authors')
+def test_put_author(author_api):
+    author_id = 7
+    data = {
+  "id": 7,
+  "idBook": 4,
+  "firstName": "Ivanchenkop",
+  "lastName": "Maria"
+}
+    response = author_api.put_author(author_id,data)
+    allure.attach(response.text, name="Response body",
+              attachment_type=allure.attachment_type.JSON)
+    assert response.status_code == 200 
+    assert 'Ivanchenkop' in response.json()['firstName']
+    assert 'Maria' in response.json()['lastName'] 
+    assert response.json()['id'] == author_id
+    
