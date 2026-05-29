@@ -1,5 +1,5 @@
 import allure
-
+import pytest
 
 
 pytestmark = [allure.feature('Books API')]
@@ -7,21 +7,17 @@ pytestmark = [allure.feature('Books API')]
 
 @allure.story('Negative cases')
 @allure.severity(allure.severity_level.MINOR)
-@allure.title('Testing negative book id')
-def test_negative_book_id(books_api):
-    book_id = -1 
+@allure.title('Testing negative book get')
+@pytest.mark.parametrize('book_id, status_code', 
+                         [
+                             (-1,404),
+                             ('abc',400)
+                         ] )
+def test_negative_book_get(books_api, book_id, status_code):
     response = books_api.get_book_by_id(book_id)
-    assert response.status_code == 404 
+    assert response.status_code == status_code
     
-   
-@allure.story('Negative cases - invalid id')
-@allure.severity(allure.severity_level.MINOR) 
-@allure.title('Testing negative book invalid id')   
-def test_negative_book_invalid_id(books_api):
-    book_id = 'abc'
-    response = books_api.get_book_by_id(book_id)
-    assert response.status_code == 400
-    
+ 
 @allure.story('Negative cases - post')
 @allure.severity(allure.severity_level.MINOR)  
 @allure.title('Testing negative post book') 

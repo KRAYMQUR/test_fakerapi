@@ -3,6 +3,7 @@ import allure
 
 
 
+
 pytestmark = [allure.feature('Authors API')]
 
 
@@ -14,6 +15,8 @@ def test_get_author(author_api):
     allure.attach(response.text, name="Response body",
                   attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200
+    assert len(response.json()) > 0
+    authors = Author(**response.json()[0])
     
 @allure.story('Get author by id')
 @allure.severity(allure.severity_level.NORMAL)   
@@ -24,8 +27,8 @@ def test_get_author_by_id(author_api):
     allure.attach(response.text, name="Response body",
                   attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200
-    author_info = Author(**response.json())
-    assert author_info.id == author_id 
+    authors = Author(**response.json())
+    assert authors.id == author_id 
     
     
 @allure.story('Delete authors')
@@ -50,8 +53,10 @@ def test_post_author(author_api):
     allure.attach(response.text, name="Response body",
               attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200 
-    assert 'Ivanov' in response.json()['firstName']
-    assert response.json()['id'] == 6 
+    authors = Author(**response.json())
+    assert authors.id == 6
+    assert authors.idBook == 4
+    assert authors.firstName == 'Ivanov'
     
     
 @allure.story('Put authors')
@@ -69,7 +74,8 @@ def test_put_author(author_api):
     allure.attach(response.text, name="Response body",
               attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200 
-    assert 'Ivanchenkop' in response.json()['firstName']
-    assert 'Maria' in response.json()['lastName'] 
-    assert response.json()['id'] == author_id
+    authors = Author(**response.json())
+    assert authors.id == 7
+    assert authors.firstName == 'Ivanchenkop'
+    
     

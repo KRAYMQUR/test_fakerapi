@@ -1,5 +1,5 @@
 import allure
-
+import pytest
 
 
 
@@ -8,20 +8,15 @@ pytestmark = [allure.feature('Authors API')]
 
 @allure.story('Negative cases')
 @allure.severity(allure.severity_level.MINOR)
-@allure.title('Testing negative author id')
-def test_negative_author_id(author_api):
-    author_id = -1 
+@allure.title('Testing negative author get')
+@pytest.mark.parametrize('author_id, status_code' , [
+    (-1,404),
+    ('abc',400)
+])
+def test_negative_authors_get(author_api, author_id, status_code):
     response = author_api.get_author_by_id(author_id)
-    assert response.status_code == 404  
- 
- 
-@allure.story('Negative cases - invalid id') 
-@allure.severity(allure.severity_level.MINOR)   
-@allure.title('Testing negative author invalid id')  
-def test_negative_author_invalid_id(author_api):
-    author_id = 'abc'
-    response = author_api.get_author_by_id(author_id)
-    assert response.status_code == 400
+    assert response.status_code == status_code
+
     
 @allure.story('Negative cases - post')
 @allure.severity(allure.severity_level.MINOR)

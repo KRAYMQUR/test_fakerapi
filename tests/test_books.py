@@ -13,6 +13,11 @@ def test_get_books(books_api):
     allure.attach(response.text, name="Response body",
                   attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200
+    assert len(response.json()) > 0
+    book = Book(**response.json()[0])
+    
+    
+    
     
     
    
@@ -25,8 +30,8 @@ def test_get_book_by_id(books_api):
     allure.attach(response.text, name="Response body",
                   attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200
-    book_info = Book(**response.json())
-    assert book_info.id == book_id
+    book = Book(**response.json())
+    assert book.id == book_id
 
 @allure.story('Delete books')  
 @allure.severity(allure.severity_level.NORMAL)   
@@ -55,9 +60,10 @@ def test_put_books(books_api):
     allure.attach(response.text, name="Response body",
               attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200
-    assert 'test' in response.json()['title']
-    assert response.json()['id'] == book_id
-    assert response.json()['pageCount'] == 1
+    book = Book(**response.json())
+    assert book.title == 'test'
+    assert book.id == book_id 
+    assert book.pageCount == 1
     
 
 @allure.story('Post books')   
@@ -66,7 +72,7 @@ def test_put_books(books_api):
 def test_post_books(books_api):
     data = {
   "id": 666,
-  "title": "Auyhor",
+  "title": "Author123",
   "description": "Testim in id 66",
   "pageCount": 2,
   "excerpt": "ahaha",
@@ -77,8 +83,10 @@ def test_post_books(books_api):
     allure.attach(response.text, name="Response body",
               attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200
-    assert 'Auyhor' in response.json()['title']
-    assert response.json()['id'] == 666
+    book = Book(**response.json())
+    assert book.title == 'Author123'
+    assert book.pageCount == 2
+    assert book.excerpt == 'ahaha'
     
     
     
