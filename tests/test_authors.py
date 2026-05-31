@@ -24,6 +24,7 @@ def test_get_author(authors_api):
     assert authors.id is not None
     assert authors.firstName is not None
     assert authors.lastName is not None
+    assert response.elapsed.total_seconds() < 2
 
     
     

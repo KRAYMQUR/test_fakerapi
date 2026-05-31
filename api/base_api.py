@@ -14,23 +14,23 @@ class BaseApi:
         self.session.headers = {'Content-Type': 'application/json'}
 
 
-    def get(self, endpoint):
+    def get(self, endpoint: str) -> requests.Response:
         url = f"{self.BASE_URL}/{endpoint}"
         return self.session.get(url,timeout=10,)
     
-    def post(self, endpoint, data):
+    def post(self, endpoint: str, data: dict) -> requests.Response:
         url = f"{self.BASE_URL}/{endpoint}"
         return self.session.post(url,timeout=10,json=data)
 
-    def put(self, endpoint, data):
+    def put(self, endpoint: str, data: dict) -> requests.Response:
         url = f"{self.BASE_URL}/{endpoint}"
         return self.session.put(url,timeout=10,json=data)
     
-    def delete(self, endpoint):
+    def delete(self, endpoint: str) -> requests.Response:
         url = f"{self.BASE_URL}/{endpoint}"
         return self.session.delete(url,timeout=10)
     
     
-    def attach_response(self, response):
+    def attach_response(self, response: requests.Response) -> None:
         allure.attach(response.text, name="Response body", 
                       attachment_type=allure.attachment_type.JSON)

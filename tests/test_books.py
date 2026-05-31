@@ -22,6 +22,7 @@ def test_get_books(books_api):
     book = Book(**response.json()[0])
     assert book.id is not None 
     assert book.title is not None
+    assert response.elapsed.total_seconds() < 2
     
     
     

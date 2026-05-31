@@ -24,6 +24,9 @@ jobs:
               run: pip install -r requirements.txt 
 
             - name: Run tests
+              env: 
+                BASE_URL: https://fakerestapi.azurewebsites.net/api/v1
+
               run: pytest --alluredir=allure-results
 
             - name: Get Allure Report
@@ -45,6 +48,7 @@ jobs:
               run: npm install -g allure-commandline
 
             - name: Generate Allure 
+              if: always()
               run: allure generate allure-results -o allure-report --clean
 
             - name: Deploy to GitHub Pages
