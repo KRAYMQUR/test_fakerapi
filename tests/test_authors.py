@@ -1,6 +1,6 @@
 from models.authors import Author 
 import allure
-from tests.constants import AUTHOR_ID_DELETE, AUTHOR_ID_GET , AUTHOR_ID_POST , AUTHOR_ID_PUT
+from tests.constants import AUTHOR_ID_GET , AUTHOR_ID_POST , AUTHOR_ID_PUT
 import pytest
 from faker import Faker
 
@@ -22,6 +22,8 @@ def test_get_author(authors_api):
     assert len(response.json()) > 0
     authors = Author(**response.json()[0])
     assert authors.id is not None
+    assert authors.firstName is not None
+    assert authors.lastName is not None
 
     
     
@@ -41,10 +43,9 @@ def test_get_author_by_id(authors_api):
 @allure.story('Delete authors')
 @allure.severity(allure.severity_level.NORMAL)  
 @allure.title('Testing delete authors')
-def test_delete_author(authors_api):
-    author_id = AUTHOR_ID_DELETE
-    response = authors_api.delete_author(author_id)
-    assert response.status_code == 200
+def test_delete_author(authors_api,created_author):
+    response = authors_api.delete_author(created_author)
+    assert response.status_code == 200    
   
   
 @pytest.mark.regression

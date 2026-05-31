@@ -38,6 +38,7 @@ def test_negative_post_book(books_api):
     assert response.status_code == 400
     
  
+@pytest.mark.xfail(reason="fakerestapi returns 200 instead of 404 for non-existent book_id")
 @allure.story('Negative cases - put')
 @allure.severity(allure.severity_level.MINOR)
 @allure.title('Testing negative put book') 
@@ -53,5 +54,4 @@ def test_negative_put_book(books_api):
 }
     response = books_api.put_book(book_id,data)
     books_api.attach_response(response)
-    assert response.status_code == 200 # fakerestapi возвращает 200
-    assert response.json()['id'] == 0 # но возвращает дефолтный объект
+    assert response.status_code == 404 

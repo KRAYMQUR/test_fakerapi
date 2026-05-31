@@ -1,6 +1,6 @@
 from models.book import Book
 import allure 
-from tests.constants import BOOK_ID_DELETE,BOOK_ID_GET,BOOK_ID_POST,BOOK_ID_PUT
+from tests.constants import BOOK_ID_GET,BOOK_ID_POST,BOOK_ID_PUT
 import pytest
 from faker import Faker
 
@@ -45,9 +45,8 @@ def test_get_book_by_id(books_api):
 @allure.story('Delete books')  
 @allure.severity(allure.severity_level.NORMAL)   
 @allure.title('Testing delete books')
-def test_delete_books(books_api):
-    book_id = BOOK_ID_DELETE
-    response = books_api.delete_book(book_id)
+def test_delete_books(books_api,created_book):
+    response = books_api.delete_book(created_book)
     assert response.status_code == 200
 
 
