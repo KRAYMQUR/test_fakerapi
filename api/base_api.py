@@ -1,36 +1,35 @@
 import requests
-import os 
+import os
 from dotenv import load_dotenv
 import allure
 
 
 load_dotenv()
+
+
 class BaseApi:
     BASE_URL = os.getenv('BASE_URL', 'https://fakerestapi.azurewebsites.net/api/v1')
-
 
     def __init__(self):
         self.session = requests.Session()
         self.session.headers = {'Content-Type': 'application/json'}
 
-
     def get(self, endpoint: str) -> requests.Response:
         url = f"{self.BASE_URL}/{endpoint}"
-        return self.session.get(url,timeout=10,)
-    
+        return self.session.get(url, timeout=10)
+
     def post(self, endpoint: str, data: dict) -> requests.Response:
         url = f"{self.BASE_URL}/{endpoint}"
-        return self.session.post(url,timeout=10,json=data)
+        return self.session.post(url, timeout=10, json=data)
 
     def put(self, endpoint: str, data: dict) -> requests.Response:
         url = f"{self.BASE_URL}/{endpoint}"
-        return self.session.put(url,timeout=10,json=data)
-    
+        return self.session.put(url, timeout=10, json=data)
+
     def delete(self, endpoint: str) -> requests.Response:
         url = f"{self.BASE_URL}/{endpoint}"
-        return self.session.delete(url,timeout=10)
-    
-    
+        return self.session.delete(url, timeout=10)
+
     def attach_response(self, response: requests.Response) -> None:
-        allure.attach(response.text, name="Response body", 
+        allure.attach(response.text, name="Response body",
                       attachment_type=allure.attachment_type.JSON)

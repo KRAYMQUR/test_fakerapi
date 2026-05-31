@@ -1,8 +1,7 @@
-import pytest 
+import pytest
 from api.books_api import BooksApi
 from api.authors_api import AuthorsApi
 from faker import Faker
-
 
 
 @pytest.fixture(scope='session')
@@ -19,8 +18,8 @@ def authors_api():
 def created_author(authors_api):
     fake = Faker()
     data = {
-        "id": fake.random_int(min=100,max=999),
-        "idBook": fake.random_int(min=1,max=10),
+        "id": fake.random_int(min=100, max=999),
+        "idBook": fake.random_int(min=1, max=10),
         'firstName': fake.first_name(),
         'lastName': fake.last_name()
     }
@@ -28,8 +27,7 @@ def created_author(authors_api):
     author_id = response.json()['id']
     yield author_id
 
-    
-    
+
 @pytest.fixture()
 def created_book(books_api):
     fake = Faker()
