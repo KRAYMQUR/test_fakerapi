@@ -1,6 +1,6 @@
 import allure
 import pytest
-
+from tests.constants import AUTHOR_ID_PUT
 
 
 pytestmark = [allure.feature('Authors API'), pytest.mark.regression ]
@@ -15,6 +15,7 @@ pytestmark = [allure.feature('Authors API'), pytest.mark.regression ]
 ])
 def test_negative_authors_get(authors_api, author_id, status_code):
     response = authors_api.get_author_by_id(author_id)
+    authors_api.attach_response(response)
     assert response.status_code == status_code
 
     
@@ -30,6 +31,7 @@ def test_negative_post_author(authors_api):
   "lastName": []
 }
     response = authors_api.post_author(data)
+    authors_api.attach_response(response)
     assert response.status_code == 400
     
     
@@ -37,12 +39,13 @@ def test_negative_post_author(authors_api):
 @allure.severity(allure.severity_level.MINOR)
 @allure.title('Testing negative put author')
 def test_negative_put_author(authors_api):
-    author_id = 9999
+    author_id = AUTHOR_ID_PUT
     data = {
-  "id": 99999999,
-  "idBook": 9999999999,
+  "id": AUTHOR_ID_PUT,
+  "idBook": 4,
   "firstName": [],
   "lastName": []
 }
     response = authors_api.put_author(author_id,data)
+    authors_api.attach_response(response)
     assert response.status_code == 400

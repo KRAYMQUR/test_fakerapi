@@ -17,6 +17,7 @@ fake = Faker()
                          ] )
 def test_negative_book_get(books_api, book_id, status_code):
     response = books_api.get_book_by_id(book_id)
+    books_api.attach_response(response)
     assert response.status_code == status_code
     
  
@@ -30,9 +31,10 @@ def test_negative_post_book(books_api):
   "description": 'abc',
   "pageCount": 'abc',
   "excerpt": "string",
-  "publishDate": "2026-05-28T06:50:37.660Z"
+  "publishDate": fake.iso8601()
 }
     response = books_api.post_book(data)
+    books_api.attach_response(response)
     assert response.status_code == 400
     
  
@@ -47,8 +49,9 @@ def test_negative_put_book(books_api):
   "description": "string",
   "pageCount": 0,
   "excerpt": "string",
-  "publishDate": "2026-05-28T06:52:16.268Z"
+  "publishDate": fake.iso8601()
 }
     response = books_api.put_book(book_id,data)
+    books_api.attach_response(response)
     assert response.status_code == 200 # fakerestapi возвращает 200
     assert response.json()['id'] == 0 # но возвращает дефолтный объект
