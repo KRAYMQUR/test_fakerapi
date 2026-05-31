@@ -1,5 +1,6 @@
 from models.book import Book
 import allure 
+from tests.constants import BOOK_ID_DELETE,BOOK_ID_GET,BOOK_ID_POST,BOOK_ID_PUT
 
 
 pytestmark = [allure.feature('Books API')]
@@ -25,7 +26,7 @@ def test_get_books(books_api):
 @allure.severity(allure.severity_level.NORMAL)
 @allure.title('Testing get book by id')
 def test_get_book_by_id(books_api):
-    book_id = 9
+    book_id = BOOK_ID_GET
     response = books_api.get_book_by_id(book_id)
     allure.attach(response.text, name="Response body",
                   attachment_type=allure.attachment_type.JSON)
@@ -37,7 +38,7 @@ def test_get_book_by_id(books_api):
 @allure.severity(allure.severity_level.NORMAL)   
 @allure.title('Testing delete books')
 def test_delete_books(books_api):
-    book_id = 5
+    book_id = BOOK_ID_DELETE
     response = books_api.delete_books(book_id)
     assert response.status_code == 200
 
@@ -46,7 +47,7 @@ def test_delete_books(books_api):
 @allure.severity(allure.severity_level.CRITICAL)
 @allure.title('Testing put books')
 def test_put_books(books_api):
-    book_id = 6
+    book_id = BOOK_ID_PUT
     data = {
   "id": book_id,
   "title": "test",
@@ -71,7 +72,7 @@ def test_put_books(books_api):
 @allure.title('Testing post books')
 def test_post_books(books_api):
     data = {
-  "id": 666,
+  "id": BOOK_ID_POST,
   "title": "Author123",
   "description": "Testim in id 66",
   "pageCount": 2,

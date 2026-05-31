@@ -1,5 +1,6 @@
 from models.authors import Author 
 import allure
+from tests.constants import AUTHOR_ID_DELETE, AUTHOR_ID_GET , AUTHOR_ID_POST , AUTHOR_ID_PUT
 
 
 
@@ -22,7 +23,7 @@ def test_get_author(author_api):
 @allure.severity(allure.severity_level.NORMAL)   
 @allure.title('Testing get_id authors')
 def test_get_author_by_id(author_api):
-    author_id = 3
+    author_id = AUTHOR_ID_GET
     response = author_api.get_author_by_id(author_id)
     allure.attach(response.text, name="Response body",
                   attachment_type=allure.attachment_type.JSON)
@@ -35,7 +36,7 @@ def test_get_author_by_id(author_api):
 @allure.severity(allure.severity_level.NORMAL)  
 @allure.title('Testing delete authors')
 def test_delete_author(author_api):
-    author_id = 6
+    author_id = AUTHOR_ID_DELETE
     response = author_api.delete_author(author_id)
     assert response.status_code == 200
   
@@ -44,7 +45,7 @@ def test_delete_author(author_api):
 @allure.title('Testing post authors')   
 def test_post_author(author_api):
     data = {
-  "id": 6,
+  "id": AUTHOR_ID_POST,
   "idBook": 4,
   "firstName": "Ivanov",
   "lastName": "test"
@@ -54,7 +55,7 @@ def test_post_author(author_api):
               attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200 
     authors = Author(**response.json())
-    assert authors.id == 6
+    assert authors.id == AUTHOR_ID_POST
     assert authors.idBook == 4
     assert authors.firstName == 'Ivanov'
     
@@ -63,9 +64,9 @@ def test_post_author(author_api):
 @allure.severity(allure.severity_level.CRITICAL)
 @allure.title('Testing put authors')
 def test_put_author(author_api):
-    author_id = 7
+    author_id = AUTHOR_ID_PUT
     data = {
-  "id": 7,
+  "id": AUTHOR_ID_PUT,
   "idBook": 4,
   "firstName": "Ivanchenkop",
   "lastName": "Maria"
@@ -75,7 +76,7 @@ def test_put_author(author_api):
               attachment_type=allure.attachment_type.JSON)
     assert response.status_code == 200 
     authors = Author(**response.json())
-    assert authors.id == 7
+    assert authors.id == AUTHOR_ID_PUT
     assert authors.firstName == 'Ivanchenkop'
     
     

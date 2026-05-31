@@ -1,9 +1,12 @@
 import requests
+import os 
+from dotenv import load_dotenv
 
 
-
+load_dotenv()
 class BaseApi:
-    BASE_URL = 'https://fakerestapi.azurewebsites.net/api/v1'
+    BASE_URL = os.getenv('BASE_URL', 'https://fakerestapi.azurewebsites.net/api/v1')
+
 
     def __init__(self,):
         self.session = requests.Session()
