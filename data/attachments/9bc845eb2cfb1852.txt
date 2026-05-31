@@ -1,0 +1,1 @@
+INFO     api.base_api:base_api.py:30 POST https://fakerestapi.azurewebsites.net/api/v1/Authors → 200 (0.13s)
