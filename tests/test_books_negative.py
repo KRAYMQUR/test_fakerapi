@@ -1,8 +1,10 @@
 import allure
 import pytest
+from faker import Faker
 
 
-pytestmark = [allure.feature('Books API')]
+pytestmark = [allure.feature('Books API'), pytest.mark.regression]
+fake = Faker()
 
 
 @allure.story('Negative cases')
@@ -30,7 +32,7 @@ def test_negative_post_book(books_api):
   "excerpt": "string",
   "publishDate": "2026-05-28T06:50:37.660Z"
 }
-    response = books_api.post_books(data)
+    response = books_api.post_book(data)
     assert response.status_code == 400
     
  
@@ -47,6 +49,6 @@ def test_negative_put_book(books_api):
   "excerpt": "string",
   "publishDate": "2026-05-28T06:52:16.268Z"
 }
-    response = books_api.put_books(book_id,data)
+    response = books_api.put_book(book_id,data)
     assert response.status_code == 200 # fakerestapi возвращает 200
     assert response.json()['id'] == 0 # но возвращает дефолтный объект

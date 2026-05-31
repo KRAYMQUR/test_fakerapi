@@ -12,14 +12,14 @@ class BooksApi(BaseApi):
         with allure.step(f"Get /Books/{book_id}"):
             return self.get(f'Books/{book_id}')
     
-    def post_books(self,data):
+    def post_book(self,data):
         with allure.step("Post /Books"):
             return self.post('Books',data)
-    
-    def put_books(self,book_id,data):
+
+    def put_book(self,book_id,data):
         with allure.step(f"Put /Books/{book_id}"):
-            return self.put(f'Books/{book_id}',data) 
-    
-    def delete_books(self,book_id):
+            return self.put(f'Books/{book_id}',data)
+
+    def delete_book(self,book_id):
         with allure.step(f"Delete /Books/{book_id}"):
             return self.delete(f'Books/{book_id}')

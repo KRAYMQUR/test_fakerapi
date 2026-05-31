@@ -4,12 +4,13 @@ from api.authors_api import AuthorsApi
 
 
 
-@pytest.fixture 
+
+@pytest.fixture(scope='session')
 def books_api():
     return BooksApi()
 
 
-@pytest.fixture
-def author_api():
+@pytest.fixture(scope='session')
+def authors_api():
     return AuthorsApi()
 
