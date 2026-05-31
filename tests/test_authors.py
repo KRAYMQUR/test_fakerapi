@@ -55,9 +55,10 @@ def test_delete_author(authors_api, created_author):
 def test_post_author(authors_api):
     firstName = fake.first_name()
     lastName = fake.last_name()
+    id_book = fake.random_int(min=1, max=10)
     data = {
         "id": AUTHOR_ID_POST,
-        "idBook": 4,
+        "idBook": id_book,
         "firstName": firstName,
         "lastName": lastName
     }
@@ -66,7 +67,7 @@ def test_post_author(authors_api):
     assert response.status_code == 200
     authors = Author(**response.json())
     assert authors.id == AUTHOR_ID_POST
-    assert authors.idBook == 4
+    assert authors.idBook == id_book
     assert authors.firstName == firstName
     assert authors.lastName == lastName
 
@@ -78,10 +79,11 @@ def test_post_author(authors_api):
 def test_put_author(authors_api):
     firstName = fake.first_name()
     lastName = fake.last_name()
+    id_book = fake.random_int(min=1, max=10)
     author_id = AUTHOR_ID_PUT
     data = {
         "id": AUTHOR_ID_PUT,
-        "idBook": 4,
+        "idBook": id_book,
         "firstName": firstName,
         "lastName": lastName
     }
