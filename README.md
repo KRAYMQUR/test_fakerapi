@@ -90,15 +90,17 @@ allure serve allure-results
 
 | Resource | Methods | Positive | Negative |
 |----------|---------|----------|----------|
-| Books | GET, POST, PUT, DELETE | 4 | 3 |
-| Authors | GET, POST, PUT, DELETE | 4 | 3 |
+| Books | GET, POST, PUT, DELETE | 5 | 3 |
+| Authors | GET, POST, PUT, DELETE | 5 | 3 |
 
 **Patterns used:**
 - Faker for dynamic test data
 - Pydantic for response contract validation
-- `yield` fixtures for test data setup/teardown
+- `yield` fixtures for test data creation (test itself is the teardown)
 - `xfail` for known API bugs
 - Response time assertions on smoke tests
+- `logging` for request/response visibility
+- Parametrize for boundary coverage
 
 ---
 

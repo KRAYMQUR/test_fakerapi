@@ -29,8 +29,8 @@ def test_get_books(books_api):
 @allure.story('Get book by id')
 @allure.severity(allure.severity_level.NORMAL)
 @allure.title('Testing get book by id')
-def test_get_book_by_id(books_api):
-    book_id = BOOK_ID_GET
+@pytest.mark.parametrize('book_id', [BOOK_ID_GET, 15])
+def test_get_book_by_id(books_api, book_id):
     response = books_api.get_book_by_id(book_id)
     books_api.attach_response(response)
     assert response.status_code == 200

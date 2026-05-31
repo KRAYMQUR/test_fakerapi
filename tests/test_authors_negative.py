@@ -1,6 +1,9 @@
 import allure
 import pytest
+from faker import Faker
 from tests.constants import AUTHOR_ID_PUT
+
+fake = Faker()
 
 
 pytestmark = [allure.feature('Authors API'), pytest.mark.regression]
@@ -42,7 +45,7 @@ def test_negative_put_author(authors_api):
     author_id = AUTHOR_ID_PUT
     data = {
         "id": AUTHOR_ID_PUT,
-        "idBook": 4,
+        "idBook": fake.random_int(min=1, max=10),
         "firstName": [],
         "lastName": []
     }

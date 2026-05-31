@@ -19,10 +19,7 @@ def test_get_author(authors_api):
     authors_api.attach_response(response)
     assert response.status_code == 200
     assert len(response.json()) > 0
-    authors = Author(**response.json()[0])
-    assert authors.id is not None
-    assert authors.firstName is not None
-    assert authors.lastName is not None
+    Author(**response.json()[0])
     assert response.elapsed.total_seconds() < 2
 
 
@@ -30,8 +27,8 @@ def test_get_author(authors_api):
 @allure.story('Get author by id')
 @allure.severity(allure.severity_level.NORMAL)
 @allure.title('Testing get_id authors')
-def test_get_author_by_id(authors_api):
-    author_id = AUTHOR_ID_GET
+@pytest.mark.parametrize('author_id', [AUTHOR_ID_GET, 56])
+def test_get_author_by_id(authors_api, author_id):
     response = authors_api.get_author_by_id(author_id)
     authors_api.attach_response(response)
     assert response.status_code == 200
