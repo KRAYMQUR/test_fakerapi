@@ -1,0 +1,2 @@
+INFO     api.base_api:base_api.py:28 POST https://fakerestapi.azurewebsites.net/api/v1/Authors → 200 (0.10s)
+INFO     api.base_api:base_api.py:40 DELETE https://fakerestapi.azurewebsites.net/api/v1/Authors/915 → 200 (0.10s)
