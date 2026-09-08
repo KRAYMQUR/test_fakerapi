@@ -1,0 +1,1 @@
+{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-71e60aca3ee8eb4183126cdc365f8337-c3109a54177cd348-00","errors":{"$.firstName":["The JSON value could not be converted to System.String. Path: $.firstName | LineNumber: 0 | BytePositionInLine: 40."]}}
